@@ -1,10 +1,10 @@
-
 ---
 <div align="center">
-  <h1>🚀 Quick Git Advance</h1>
-  <p>Git 仓库初始化方案，让仓库创建/初始化/ignore文件一步到位 解放双手</p>
-<div/>
+<h1>🚀 Quick Git Advance</h1>
+<p>Git 仓库初始化方案，让仓库创建/初始化/ignore文件一步到位 解放双手</p>
+</div>
 ---
+
 👉 [GitHub 仓库地址](https://github.com/LiCHUYA/quick-git-advance)
 
 ## ✨ 特性一览
@@ -30,27 +30,27 @@
 6. **分支冲突**：main/master 分支命名混乱
 7. **错误排查**：认证失败等问题定位困难
 
-| 传统步骤                  | 存在问题             |
-| ------------------------- | -------------------- |
+| 传统步骤                  | 存在问题              |
+| ------------------------- | --------------------- |
 | 1. 访问 GitHub/Gitee 网站 | ⏰ 流程繁琐，耗时较长 |
 | 2. 手动创建仓库           | 🔍 需要记忆多个命令   |
 | 3. 配置 SSH 密钥          | ⚠️ 容易出错和遗漏     |
 | 4. 本地初始化 Git         | 📝 重复性工作多       |
 | 5. 编写 .gitignore        | 🔒 安全配置复杂       |
 | 6. 设置远程仓库           | 🌐 多平台切换麻烦     |
-| 7. 推送代码               |                      |
+| 7. 推送代码               |                       |
 
 ### Quick Git Advance 的优势
 
-- 可通过一行命令一键完成git仓库全部初始化流程,自动配置SSH推送
-- 可通过一行命令生成你想要的.gitignore文件
+- 可通过一行命令一键完成 git 仓库全部初始化流程,自动配置 SSH 推送
+- 可通过一行命令生成你想要的.gitignore 文件
 
-| 核心优势     | 具体表现                                                     |
-| ------------ | ------------------------------------------------------------ |
-| **效率提升** | - 一键完成全部初始化流程<br> - 智能默认值，减少输入<br> - 配置持久化，一次设置永久生效<br> - 批量操作支持<br> - 一键生成.gitignore文件 <br> |
-| **安全可靠** | - 自动化 SSH 密钥管理<br> - 令牌安全存储<br> - 操作前自动检查<br> - 失败自动回滚 |
-| **用户体验** | - 清晰的命令行界面<br> - 智能的交互引导<br> - 详细的错误提示<br> - 完整的操作日志 |
-| **功能完备** | - 支持主流平台<br> - 完整的分支管理<br> - 灵活的配置选项<br> - 丰富的模板支持 |
+| 核心优势     | 具体表现                                                                                                                                     |
+| ------------ | -------------------------------------------------------------------------------------------------------------------------------------------- |
+| **效率提升** | - 一键完成全部初始化流程<br> - 智能默认值，减少输入<br> - 配置持久化，一次设置永久生效<br> - 批量操作支持<br> - 一键生成.gitignore 文件 <br> |
+| **安全可靠** | - 自动化 SSH 密钥管理<br> - 令牌安全存储<br> - 操作前自动检查<br> - 失败自动回滚                                                             |
+| **用户体验** | - 清晰的命令行界面<br> - 智能的交互引导<br> - 详细的错误提示<br> - 完整的操作日志                                                            |
+| **功能完备** | - 支持主流平台<br> - 完整的分支管理<br> - 灵活的配置选项<br> - 丰富的模板支持                                                                |
 
 ## 📦 安装
 
@@ -79,18 +79,18 @@ quick-git-advance init
 
 ### 核心讲解
 
-> 核心为以下4个命令
+> 核心为以下 4 个命令
 
 - quick-git-advance init 一键初始化并推送仓库
-  - -m   
+
+  - -m
   - --multi 创建多仓库
 
 - quick-git-advance config 配置文件
-  - --edit  修改
-  - --list   查看
-- quick-git-advance ignore  创建ignore文件
-- quick-git-advance reset  初始化配置
-
+  - --edit 修改
+  - --list 查看
+- quick-git-advance ignore 创建 ignore 文件
+- quick-git-advance reset 初始化配置
 
 ### 初始化流程交互
 
@@ -120,12 +120,10 @@ $ quick-git-advance init
 
 ? 开发分支名称: [develop]
 ```
+
 ![](https://pic1.imgdb.cn/item/67bc05d4d0e0a243d4033812.png)
 
-
 ![](https://pic1.imgdb.cn/item/67bc002ed0e0a243d40335c9.gif)
-
-
 
 > 如果有不同平台仓库想要同时使用这个项目 可以带参 -m
 
@@ -139,7 +137,7 @@ quick-git-advance config
 
 交互示例：
 
-> 当时有windows终端输入 quick-git-advance config --edit 时 会默认打开记事本编辑配置 而使用git bash打开 会默认打开vim进行编辑
+> 当时有 windows 终端输入 quick-git-advance config --edit 时 会默认打开记事本编辑配置 而使用 git bash 打开 会默认打开 vim 进行编辑
 
 ```js
 
@@ -154,16 +152,16 @@ quick-git-advance config --list
 quick-git-advance config -l
 
 ```
+
 ![](https://pic1.imgdb.cn/item/67bc02c8d0e0a243d40336ae.gif)
 
-### 生成.gitignore文件
+### 生成.gitignore 文件
 
 ```js
 quick-git-advance ignore
 ```
 
-> 通过  quick-git-advance ignore 命令 可快速生成对应的ignore文件
-
+> 通过 quick-git-advance ignore 命令 可快速生成对应的 ignore 文件
 
 ![](https://pic1.imgdb.cn/item/67bc02c8d0e0a243d40336af.gif)
 
@@ -175,30 +173,33 @@ quick-git-advance reset
 
 一键初始化配置文件
 
-
 ## 📝 详细功能说明
 
 ### 1. 初始化流程
 
 1. **基本信息收集**
+
    - 仓库名称（支持验证）
    - 平台选择（GitHub/Gitee）
    - 仓库描述（可选，最大 255 字符）
    - 可见性设置
 
 2. **冲突检测**
+
    - 检查本地目录是否存在
    - 检查是否已是 Git 仓库
    - 检查远程仓库是否存在
    - 提供冲突解决选项
 
 3. **SSH 配置**
+
    - 检测现有 SSH 配置
    - 必要时自动生成密钥
    - 自动添加到远程平台
    - 自动测试连接
 
 4. **仓库创建**
+
    - 创建远程仓库
    - 初始化本地仓库
    - 配置 .gitignore
