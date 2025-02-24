@@ -1,6 +1,6 @@
 {
-  "name": "quick-git-advance-init",
-  "version": "1.0.1",
+  "name": "quick-git-advance",
+  "version": "1.0.3",
   "description": "快速初始化 Git 仓库并设置分支",
   "main": "src/index.js",
   "bin": {

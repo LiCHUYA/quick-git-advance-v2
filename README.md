@@ -128,16 +128,14 @@ $ quick-git-advance init
 
 > 如果有不同平台仓库想要同时使用这个项目 可以带参 -m
 
-![](./67bc0e2ed0e0a243d4033cfe.gif)
+![](https://pic1.imgdb.cn/item/67bc0e2ed0e0a243d4033cfe.gif)
 
 > 创建完整后推送代码 会自动的创建远程仓库 并进行推送 以及本地和远程分支的管理
 
 ```js
-  git push //默认推送
+  git push //默认推送到github
   # 或
   git push gitee //推送到 gitee
-  # 或
-  git push github //推送到 github
 ```
 
 ### 配置管理交互
