@@ -325,21 +325,25 @@ class GitInitializer {
           owner: response.data.owner.login, // 获取正确的用户名
         };
       } else if (platform === "gitee") {
-        const response = await fetch("https://gitee.com/api/v5/user/repos", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json",
-          },
-          body: JSON.stringify({
-            access_token: config.token,
-            name: repoName,
-            private: visibility === "private",
-            description: description,
-            auto_init: false,
-            path: repoName, // 添加 path 参数
-          }),
+        // 构建 URL 参数
+        const params = new URLSearchParams({
+          access_token: config.token,
+          name: repoName,
+          private: visibility === "private",
+          description: description || "",
+          auto_init: false,
         });
+
+        const response = await fetch(
+          `https://gitee.com/api/v5/user/repos?${params.toString()}`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Accept: "application/json",
+            },
+          }
+        );
 
         if (!response.ok) {
           const error = await response.json();
