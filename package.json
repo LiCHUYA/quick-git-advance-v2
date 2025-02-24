@@ -1,6 +1,6 @@
 {
   "name": "quick-git-advance",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "快速初始化 Git 仓库并设置分支",
   "main": "src/index.js",
   "bin": {
@@ -12,7 +12,7 @@
     "test": "node ./bin/quick-git-init.js init",
     "config": "node ./bin/quick-git-init.js config",
     "reset": "node ./bin/quick-git-init.js reset",
-    "rungit": " git add . && git commit -m 'update' && git push && git push gitee",
+    "rungit": "git add . && git commit -m 'update' && git push && git push gitee",
     "link": "npm link",
     "unlink": "npm unlink"
   },

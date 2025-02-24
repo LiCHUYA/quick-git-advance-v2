@@ -212,7 +212,55 @@ class GitInitializer {
         }
       } else {
         // 单仓库模式
-        // ... 原有的单仓库逻辑 ...
+        try {
+          // 获取平台配置
+          const config = await this.ensurePlatformConfig(basicInfo.platform);
+
+          // 创建远程仓库
+          const createdRepo = await this.createRemoteRepo({
+            ...basicInfo,
+            ...repoInfo,
+            platform: basicInfo.platform,
+            config,
+          });
+
+          // 初始化本地仓库
+          await this.git.init();
+          await this.createGitignore();
+          await this.git.add(".");
+          await this.git.commit("Initial commit");
+
+          // 添加远程仓库
+          const remoteUrl = this.getRemoteUrl(
+            basicInfo.platform,
+            createdRepo.owner,
+            createdRepo.name
+          );
+          await this.git.addRemote("origin", remoteUrl);
+
+          // 设置主分支名称
+          if (repoInfo.mainBranch !== "master") {
+            await this.git.branch(["-M", repoInfo.mainBranch]);
+          }
+
+          // 推送到远程
+          await this.git.push(["-u", "origin", repoInfo.mainBranch]);
+          this.utils.log.success(`已推送到 ${basicInfo.platform}`);
+
+          // 如果需要创建开发分支
+          if (repoInfo.needDevBranch) {
+            await this.git.checkoutLocalBranch(repoInfo.developBranch);
+            await this.git.push(["-u", "origin", repoInfo.developBranch]);
+            await this.git.checkout(repoInfo.mainBranch);
+            this.utils.log.success("已创建并推送开发分支");
+          }
+
+          return true;
+        } catch (error) {
+          this.utils.log.error(`初始化失败: ${error.message}`);
+          await this.cleanupOnFailure();
+          return false;
+        }
       }
 
       return true;
@@ -401,69 +449,6 @@ class GitInitializer {
     }
   }
 
-  // 初始化本地仓库
-  async initializeLocalRepo(repoSshUrl, repoInfo) {
-    const { mainBranch, developBranch, needDevBranch } = repoInfo;
-
-    try {
-      // 创建并写入 .gitignore
-      await this.createGitignore();
-
-      // 初始化 Git 仓库
-      await this.git.init();
-      this.utils.log.success("Git 仓库初始化成功");
-
-      // 只添加 .gitignore 文件
-      await this.git.add(".gitignore");
-      await this.git.commit("chore: add .gitignore");
-      this.utils.log.success("创建初始提交");
-
-      // 推送前测试 SSH 连接
-      const platform = repoSshUrl.includes("github.com") ? "github" : "gitee";
-      const testCmd = `ssh -T git@${platform}.com`;
-
-      try {
-        await this.git.raw(["remote", "add", "origin", repoSshUrl]);
-        this.utils.log.success(`添加远程仓库 ${repoSshUrl}`);
-      } catch (error) {
-        // 如果失败，清理已创建的文件
-        await this.cleanupOnFailure();
-        throw error;
-      }
-
-      // 如果推送失败，提供帮助信息
-      try {
-        await this.git.push(["-u", "origin", mainBranch]);
-      } catch (error) {
-        // 如果失败，清理已创建的文件
-        await this.cleanupOnFailure();
-        if (error.message.includes("Permission denied (publickey)")) {
-          console.log(chalk.red("\n❌ SSH 推送失败"));
-          throw new Error("SSH 认证失败，请确保已正确配置 SSH 密钥");
-        }
-        throw error;
-      }
-
-      // 设置主分支
-      await this.git.branch(["-M", mainBranch]);
-      this.utils.log.success(`主分支名称为 ${mainBranch}`);
-
-      // 只有当需要开发分支且开发分支名与主分支名不同时才创建开发分支
-      if (needDevBranch && developBranch && developBranch !== mainBranch) {
-        await this.git.checkoutLocalBranch(developBranch);
-        this.utils.log.success(`创建并切换到 ${developBranch} 分支`);
-        await this.git.push(["-u", "origin", developBranch]);
-        this.utils.log.success("推送开发分支到远程仓库");
-        await this.git.checkout(mainBranch);
-        this.utils.log.success(`切回 ${mainBranch} 分支`);
-      }
-    } catch (error) {
-      // 如果任何步骤失败，清理已创建的文件
-      await this.cleanupOnFailure();
-      throw error;
-    }
-  }
-
   // 添加清理方法
   async cleanupOnFailure() {
     try {
@@ -490,19 +475,6 @@ class GitInitializer {
     }
   }
 
-  // 添加清除平台配置的方法
-  async clearPlatformConfig(platform) {
-    const config = await loadConfig();
-    config.platforms[platform] = {
-      username: "",
-      token: "",
-      defaultVisibility: "public",
-      defaultLicense: "MIT",
-    };
-    await saveConfig(config);
-    this.utils.log.warning(`已清除 ${platform} 的配置信息`);
-  }
-
   // 获取远程仓库 URL
   getRemoteUrl(platform, username, repoName) {
     switch (platform) {
@@ -512,44 +484,6 @@ class GitInitializer {
         return `git@gitee.com:${username}/${repoName}.git`;
       default:
         throw new Error(`不支持的平台: ${platform}`);
-    }
-  }
-
-  // 修改添加远程仓库的逻辑
-  async addRemoteRepo(platform, remoteUrl) {
-    try {
-      // 检查远程仓库是否已存在
-      const remotes = await this.git.getRemotes();
-      const exists = remotes.find((remote) => remote.name === platform);
-
-      if (exists) {
-        // 如果已存在，询问是否更新
-        const { action } = await inquirer.prompt([
-          {
-            type: "list",
-            name: "action",
-            message: `远程仓库 ${platform} 已存在，请选择操作:`,
-            choices: [
-              { name: "更新地址", value: "update" },
-              { name: "跳过", value: "skip" },
-            ],
-          },
-        ]);
-
-        if (action === "update") {
-          await this.git.removeRemote(platform);
-          await this.git.addRemote(platform, remoteUrl);
-          this.utils.log.success(`已更新 ${platform} 远程仓库地址`);
-        } else {
-          this.utils.log.info(`已跳过 ${platform} 远程仓库配置`);
-        }
-      } else {
-        // 如果不存在，直接添加
-        await this.git.addRemote(platform, remoteUrl);
-        this.utils.log.success(`已添加 ${platform} 远程仓库`);
-      }
-    } catch (error) {
-      throw new Error(`添加远程仓库失败: ${error.message}`);
     }
   }
 }
