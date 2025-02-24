@@ -1,0 +1,34 @@
+{
+  "name": "quick-git-advance-init",
+  "version": "1.0.1",
+  "description": "快速初始化 Git 仓库并设置分支",
+  "main": "src/index.js",
+  "bin": {
+    "quick-git-advance": "./bin/quick-git-init.js"
+  },
+  "scripts": {
+    "start": "node ./bin/quick-git-init.js",
+    "dev": "node --inspect-brk ./bin/quick-git-init.js",
+    "test": "node ./bin/quick-git-init.js init",
+    "config": "node ./bin/quick-git-init.js config",
+    "reset": "node ./bin/quick-git-init.js reset",
+    "link": "npm link",
+    "unlink": "npm unlink"
+  },
+  "keywords": [
+    "git",
+    "init",
+    "branch"
+  ],
+  "author": "advance",
+  "license": "MIT",
+  "dependencies": {
+    "@octokit/rest": "^20.0.2",
+    "@octokit/core": "^5.1.0",
+    "commander": "^12.0.0",
+    "chalk": "^4.1.2",
+    "inquirer": "^8.2.6",
+    "node-fetch": "^2.6.7",
+    "simple-git": "^3.22.0"
+  }
+}

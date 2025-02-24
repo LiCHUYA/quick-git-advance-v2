@@ -1,0 +1,15 @@
+{
+  "defaultPlatform": "",
+  "defaultBranch": "master",
+  "developBranch": "develop",
+  "platforms": {
+    "github": {
+      "username": "",
+      "token": ""
+    },
+    "gitee": {
+      "username": "",
+      "token": ""
+    }
+  }
+}
