@@ -58,12 +58,6 @@
 ```bash
 # NPM
 npm install -g quick-git-advance
-
-# Yarn
-yarn global add quick-git-advance
-
-# PNPM
-pnpm add -g quick-git-advance
 ```
 
 ## 🎯 快速开始

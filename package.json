@@ -12,6 +12,7 @@
     "test": "node ./bin/quick-git-init.js init",
     "config": "node ./bin/quick-git-init.js config",
     "reset": "node ./bin/quick-git-init.js reset",
+    "rungit": " git add . && git commit -m 'update' && git push && git push gitee",
     "link": "npm link",
     "unlink": "npm unlink"
   },
