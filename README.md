@@ -5,7 +5,8 @@
 </div>
 ---
 
-👉 [GitHub 仓库地址](https://github.com/LiCHUYA/quick-git-advance)
+👉 [GitHub 仓库地址](https://github.com/LiCHUYA/quick-git-advance-v2)
+👉 [Gitee 仓库地址](https://gitee.com/chen-jingsheng-123/quick-git-advance-v2)
 
 ## ✨ 特性一览
 
@@ -129,6 +130,16 @@ $ quick-git-advance init
 
 ![](./67bc0e2ed0e0a243d4033cfe.gif)
 
+> 创建完整后推送代码 会自动的创建远程仓库 并进行推送 以及本地和远程分支的管理
+
+```js
+  git push //默认推送
+  # 或
+  git push gitee //推送到 gitee
+  # 或
+  git push github //推送到 github
+```
+
 ### 配置管理交互
 
 ```bash
@@ -219,10 +230,10 @@ MIT License
 
 - 作者：advance
 - 邮箱：[203219348@qq.com]
-- 问题反馈：[GitHub Issues](https://github.com/yourname/quick-git-advance/issues)
 
 ---
 
 如果这个工具帮助到你，请给个 Star ⭐️！
 
-👉 [GitHub 仓库地址](https://github.com/LiCHUYA/quick-git-advance)
+👉 [GitHub 仓库地址](https://github.com/LiCHUYA/quick-git-advance-v2)
+👉 [Gitee 仓库地址](https://gitee.com/chen-jingsheng-123/quick-git-advance-v2)
